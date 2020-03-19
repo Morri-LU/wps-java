@@ -23,7 +23,7 @@
 3. 设计
     - 详见resources下的 导图.png 和 表结构.png
 4. 前端代码地址
-[https://github.com/mose-x/wps-view-vue.git](https://github.com/mose-x/wps-view-vue.git)
+[https://gitee.com/zm_space/wps-view-vue.git](https://gitee.com/zm_space/wps-view-vue.git)
 
 ## 配置文件中的参数部分可做参考
 ## 代码结构可自行调整
