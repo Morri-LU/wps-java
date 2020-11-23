@@ -45,3 +45,6 @@ react:
 
 ## 彩蛋
 ApplicationTests类文件中，有个OSS地址转在线预览地址方法，但是是收费的，相关费用自行了解
+
+<br><br>
+######感谢[caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)

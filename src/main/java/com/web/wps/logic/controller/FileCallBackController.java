@@ -119,17 +119,4 @@ public class FileCallBackController extends BaseController {
         return Response.success(res);
     }
 
-    /**
-     * 回调通知
-     */
-    @PostMapping("onnotify")
-    public ResponseEntity<Object> onNotify(
-            @RequestBody JSONObject obj
-    ){
-        logger.info("回调通知param:{}",JSON.toJSON(obj));
-        // TODO
-        // 返回数据暂不处理
-        return Response.success();
-    }
-
 }
