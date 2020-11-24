@@ -508,8 +508,10 @@ public class FileService extends BaseService<FileEntity, String> {
      * @param srcUri     文件url
      * @param exportType 输出类型
      */
-    public void convertFile(String srcUri, String exportType) {
-        String taskId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+    public void convertFile(String taskId, String srcUri, String exportType) {
+        if (StringUtils.isEmpty(taskId)){
+            taskId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        }
         System.out.println("--convertFile:taskId:-> " + taskId);
         String headerDate = Common.getGMTDate();
         Map<String, Object> param = new LinkedHashMap<>();

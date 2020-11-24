@@ -138,8 +138,8 @@ public class UserImplController extends BaseController {
      * @param exportType 到处类型
      */
     @PutMapping("convert")
-    public ResponseEntity<Object> convert(String srcUri, String exportType) {
-        fileService.convertFile(srcUri, exportType);
+    public ResponseEntity<Object> convert(String taskId ,String srcUri, String exportType) {
+        fileService.convertFile(taskId, srcUri, exportType);
         return Response.success();
     }
 
