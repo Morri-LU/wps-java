@@ -11,13 +11,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.io.Serializable;
 
 /**
- *
  * @author zm
  * @see abstract
  */
 @NoRepositoryBean
 public interface BaseRepository<M extends BaseEntity, ID extends Serializable>
-		extends PagingAndSortingRepository<M, ID>,JpaSpecificationExecutor<M> {
+        extends PagingAndSortingRepository<M, ID>, JpaSpecificationExecutor<M> {
 
 
 }

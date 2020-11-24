@@ -22,16 +22,16 @@ public class UserHandlerAdapter extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response, Object handler){
+                             HttpServletResponse response, Object handler) {
 
         String token = Request.getHeaderParam(request, Context.TOKEN_KEY);
-        String fileId = Request.getHeaderParam(request,Context.FILE_ID_KEY);
-        String agent = Request.getHeaderParam(request,Context.USER_AGENT);
+        String fileId = Request.getHeaderParam(request, Context.FILE_ID_KEY);
+        String agent = Request.getHeaderParam(request, Context.USER_AGENT);
 
-        String appId = Request.getQueryParam(request,Context.APP_ID);
-        String signature = Request.getQueryParam(request,Context.SIGNATURE);
+        String appId = Request.getQueryParam(request, Context.APP_ID);
+        String signature = Request.getQueryParam(request, Context.SIGNATURE);
 
-        logger.info("_w_agent:{}",agent);
+        logger.info("_w_agent:{}", agent);
 
         String uri = request.getRequestURI();
         logger.info("request whole uri:{}", uri);
@@ -43,9 +43,9 @@ public class UserHandlerAdapter extends HandlerInterceptorAdapter {
         Context.setSignature(signature);
 
         // 当是用户自定义接口，直接通过(有点废话，举个例子而已)
-        if (checkUri(request,response)){
+        if (checkUri(request, response)) {
             return true;
-        }else {
+        } else {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return false;
         }
@@ -55,7 +55,7 @@ public class UserHandlerAdapter extends HandlerInterceptorAdapter {
 //        return true;
     }
 
-    private boolean checkUri(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
+    private boolean checkUri(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         String uri = httpServletRequest.getRequestURI();
         return PassUrl.checkCode(uri.replace("/", "_"));
     }

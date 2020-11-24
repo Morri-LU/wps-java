@@ -3,6 +3,7 @@ package com.web.wps.util;
 import static org.apache.commons.codec.binary.Base64.encodeBase64String;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.HmacUtils;
+import org.springframework.util.StringUtils;
 
 
 public class SignatureUtil {
-
     public static String getKeyValueStr(Map<String, String> params) {
-        List<String> keys = new ArrayList<String>(){
+        List<String> keys = new ArrayList<String>() {
             {
                 for (Map.Entry<String, String> entry : params.entrySet()) {
                     add(entry.getKey());
@@ -31,7 +32,7 @@ public class SignatureUtil {
     }
 
     public static String getSignature(Map<String, String> params, String appSecret) {
-        List<String> keys = new ArrayList<String>(){
+        List<String> keys = new ArrayList<String>() {
             {
                 for (Map.Entry<String, String> entry : params.entrySet()) {
                     add(entry.getKey());
@@ -67,7 +68,7 @@ public class SignatureUtil {
 
     public static Map<String, String> paramToMap(String paramStr) {
         String[] params = paramStr.split("&");
-        return new HashMap<String, String>(){
+        return new HashMap<String, String>() {
             {
                 for (String param1 : params) {
                     String[] param = param1.split("=");
@@ -82,6 +83,31 @@ public class SignatureUtil {
                 }
             }
         };
+    }
+
+    /**
+     * 生成签名
+     * @param action GET、POST
+     * @param url 调用接口的url，转换接口时传入接口地址不带参；查询接口时地址带参数
+     * @param contentMd5 通过getMD5方法计算的值
+     * @param headerDate 通过getGMTDate方法计算的值
+     * */
+    public static String getSignature(String action , String url , String contentMd5 , String headerDate, String convertAppsecret){
+        try{
+            URL ur = new URL(url);
+            String key = ur.getPath();
+            if (!StringUtils.isEmpty(ur.getQuery())){
+                key = key + "?"+ ur.getQuery();
+            }
+            String signStr = action + "\n" + contentMd5 + "\n" + Common.CONTENTTYPE + "\n" + headerDate + "\n" + key ;
+            // 进行hmac sha1 签名
+            byte[] bytes = HmacUtils.hmacSha1(convertAppsecret.getBytes(), signStr.getBytes());
+            return encodeBase64String(bytes);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

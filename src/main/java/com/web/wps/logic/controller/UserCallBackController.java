@@ -32,13 +32,13 @@ public class UserCallBackController extends BaseController {
     @PostMapping("info")
     public ResponseEntity<Object> userInfo(
             @RequestBody JSONObject reqObj
-    ){
+    ) {
         logger.info("获取用户信息param:{}", JSON.toJSON(reqObj));
         try {
-            Map<String,Object> map =
+            Map<String, Object> map =
                     cUserService.userInfo(reqObj);
             return Response.success(map);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Response.bad("获取用户信息异常");
         }
     }

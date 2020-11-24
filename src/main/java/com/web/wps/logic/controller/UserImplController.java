@@ -31,22 +31,24 @@ public class UserImplController extends BaseController {
 
     /**
      * 获取网络文件预览URL
+     *
      * @param fileUrl fileUrl
      * @return t
      */
     @GetMapping("getViewUrlWebPath")
-    public ResponseEntity<Object> getViewUrlWebPath(String fileUrl){
-        logger.info("getViewUrlWebPath：fileUrl={}",fileUrl);
-        Token t = fileService.getViewUrl(fileUrl,true);
+    public ResponseEntity<Object> getViewUrlWebPath(String fileUrl) {
+        logger.info("getViewUrlWebPath：fileUrl={}", fileUrl);
+        Token t = fileService.getViewUrl(fileUrl, true);
         return Response.success(t);
     }
 
     /**
      * 获取所有文件
+     *
      * @return db下的所有文件
      */
     @GetMapping("getFileList")
-    public ResponseEntity<Object> getFileList(){
+    public ResponseEntity<Object> getFileList() {
         logger.info("获取所有文件");
         List<FileListDTO> result = fileService.getFileList();
         return Response.success(result);
@@ -54,12 +56,13 @@ public class UserImplController extends BaseController {
 
     /**
      * 获取所有文件
+     *
      * @return db下的所有文件
      */
     @PostMapping("getFileListByPage")
     public ResponseEntity<Object> getFileListByPage(
             @RequestBody com.web.wps.base.Page page
-    ){
+    ) {
         logger.info("获取所有文件-分页:{}", JSON.toJSON(page));
         Page<FileListDTO> result = fileService.getFileListByPage(page);
         return Response.success(result);
@@ -67,18 +70,19 @@ public class UserImplController extends BaseController {
 
     /**
      * 删除用户文件
+     *
      * @return true Or false
      */
     @GetMapping("delFile")
-    public ResponseEntity<Object> delFile(String id){
-        logger.info("删除文件：{}",id);
+    public ResponseEntity<Object> delFile(String id) {
+        logger.info("删除文件：{}", id);
         int res = fileService.delFile(id);
-        if (res == 1){
-            return Response.success(true,"删除成功");
-        }else if (res == 0){
-            return Response.success(false,"删除失败，该文件不允许被删除");
-        }else {
-            return Response.success(false,"数据异常");
+        if (res == 1) {
+            return Response.success(true, "删除成功");
+        } else if (res == 0) {
+            return Response.success(false, "删除失败，该文件不允许被删除");
+        } else {
+            return Response.success(false, "数据异常");
         }
     }
 
@@ -88,28 +92,29 @@ public class UserImplController extends BaseController {
     @PostMapping("uploadFile")
     public ResponseEntity<Object> uploadFile(
             @RequestParam("file") MultipartFile file
-    ){
+    ) {
         try {
             fileService.uploadFile(file);
-            return Response.success(true,"上传成功");
-        }catch (Exception e){
+            return Response.success(true, "上传成功");
+        } catch (Exception e) {
             e.printStackTrace();
-            return Response.success(false,"上传失败");
+            return Response.success(false, "上传失败");
         }
     }
 
     /**
      * 通过fileId获取wpsUrl以及token
+     *
      * @param fileId 文件id
      * @return token（包含url）
      */
     @GetMapping("getViewUrlDbPath")
-    public ResponseEntity<Object> getViewUrlDbPath(String fileId,String userId){
-        logger.info("getViewUrlDbPath：fileId={},userId={}",fileId,userId);
-        Token t = fileService.getViewUrl(fileId,userId,true);
-        if (t != null){
+    public ResponseEntity<Object> getViewUrlDbPath(String fileId, String userId) {
+        logger.info("getViewUrlDbPath：fileId={},userId={}", fileId, userId);
+        Token t = fileService.getViewUrl(fileId, userId, true);
+        if (t != null) {
             return Response.success(t);
-        }else {
+        } else {
             return Response.bad("文件不存在或其它异常！");
         }
     }
@@ -121,9 +126,32 @@ public class UserImplController extends BaseController {
     @GetMapping("createTemplateFile")
     public ResponseEntity<Object> createTemplateFile(
             String template
-    ){
+    ) {
         Object newUrl = fileService.createTemplateFile(template);
         return Response.success(newUrl);
+    }
+
+    /**
+     * 转换文件
+     *
+     * @param srcUri     文件url
+     * @param exportType 到处类型
+     */
+    @PutMapping("convert")
+    public ResponseEntity<Object> convert(String srcUri, String exportType) {
+        fileService.convertFile(srcUri, exportType);
+        return Response.success();
+    }
+
+    /**
+     * 获取转换文件
+     *
+     * @param taskId 任务id
+     */
+    @GetMapping("getConvert")
+    public ResponseEntity<Object> getConvert(String taskId) {
+        Object res = fileService.getConvertQueryRes(taskId);
+        return Response.success(res);
     }
 
 }

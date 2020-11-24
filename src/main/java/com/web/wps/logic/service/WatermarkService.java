@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class WatermarkService extends BaseService<WatermarkEntity,Long> {
+public class WatermarkService extends BaseService<WatermarkEntity, Long> {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -18,11 +18,11 @@ public class WatermarkService extends BaseService<WatermarkEntity,Long> {
         this.baseRepository = baseRepository;
     }
 
-    public WatermarkRepository getRepository(){
+    public WatermarkRepository getRepository() {
         return (WatermarkRepository) this.baseRepository;
     }
 
-    public void saveWatermark(String fileId){
+    public void saveWatermark(String fileId) {
         this.save(new WatermarkEntity(fileId));
     }
 

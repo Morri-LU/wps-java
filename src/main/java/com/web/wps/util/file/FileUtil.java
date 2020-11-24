@@ -24,94 +24,96 @@ public class FileUtil {
     // pdf
     private static String[] pdfExts = {"pdf"};
 
-    public static String getFileTypeCode(String fileType){
-        for (String et : etExts){
-            if (et.equalsIgnoreCase(fileType)){
+    public static String getFileTypeCode(String fileType) {
+        for (String et : etExts) {
+            if (et.equalsIgnoreCase(fileType)) {
                 return "s";
             }
         }
-        for (String et : wpsExts){
-            if (et.equalsIgnoreCase(fileType)){
+        for (String et : wpsExts) {
+            if (et.equalsIgnoreCase(fileType)) {
                 return "w";
             }
         }
-        for (String et : wppExts){
-            if (et.equalsIgnoreCase(fileType)){
+        for (String et : wppExts) {
+            if (et.equalsIgnoreCase(fileType)) {
                 return "p";
             }
         }
-        for (String et : pdfExts){
-            if (et.equalsIgnoreCase(fileType)){
+        for (String et : pdfExts) {
+            if (et.equalsIgnoreCase(fileType)) {
                 return "f";
             }
         }
         return null;
     }
 
-    public static boolean checkCode(String fileType){
-        for (String et : office){
-            if (et.equalsIgnoreCase(fileType)){
+    public static boolean checkCode(String fileType) {
+        for (String et : office) {
+            if (et.equalsIgnoreCase(fileType)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static String getTypeCode(String fileType){
-        if ("word".equalsIgnoreCase(fileType)){
+    public static String getTypeCode(String fileType) {
+        if ("word".equalsIgnoreCase(fileType)) {
             return "w";
-        }if ("excel".equalsIgnoreCase(fileType)){
+        }
+        if ("excel".equalsIgnoreCase(fileType)) {
             return "s";
-        }if ("ppt".equalsIgnoreCase(fileType)){
+        }
+        if ("ppt".equalsIgnoreCase(fileType)) {
             return "p";
         }
         return null;
     }
 
-    public static String getFileName(String filePath){
+    public static String getFileName(String filePath) {
         String[] pathArr = filePath.split("/");
-        String fileName ;
-        if (pathArr.length>1){
-            fileName = pathArr[pathArr.length-1];
-        }else {
+        String fileName;
+        if (pathArr.length > 1) {
+            fileName = pathArr[pathArr.length - 1];
+        } else {
             fileName = filePath;
         }
         return fileName;
     }
 
-    public static String getFileTypeByPath(String filePath){
+    public static String getFileTypeByPath(String filePath) {
         String fileName = getFileName(filePath);
         String[] arr = fileName.split("\\.");
-        return arr[arr.length-1];
+        return arr[arr.length - 1];
     }
 
-    public static String getFileTypeByName(String fileName){
+    public static String getFileTypeByName(String fileName) {
         String[] arr = fileName.split("\\.");
-        return arr[arr.length-1];
+        return arr[arr.length - 1];
     }
 
-    public static String getFileUUIDName(String fileName,String fileType){
+    public static String getFileUUIDName(String fileName, String fileType) {
         String uuid = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-        String uuidFileName = fileName.replace(".","").replace(fileType,"") + uuid + "." + fileType ;
+        String uuidFileName = fileName.replace(".", "").replace(fileType, "") + uuid + "." + fileType;
         return new String(uuidFileName.getBytes(), StandardCharsets.UTF_8);
     }
 
-    public static String makeNewFileName(String oldFileName){
+    public static String makeNewFileName(String oldFileName) {
         String fileType = FileUtil.getFileTypeByName(oldFileName);
-        String tempFileName = oldFileName.replace("."+fileType,"");
+        String tempFileName = oldFileName.replace("." + fileType, "");
         Random ne = new Random();//实例化一个random的对象ne
-        int uuid = ne.nextInt(90000)+10000;//为变量赋随机值10000-99999
-        return  tempFileName + uuid + "." + fileType;
+        int uuid = ne.nextInt(90000) + 10000;//为变量赋随机值10000-99999
+        return tempFileName + uuid + "." + fileType;
     }
 
-    public static String makeNewFileName(String oldFileName,String fileType){
-        String tempFileName = oldFileName.replace("."+fileType,"");
+    public static String makeNewFileName(String oldFileName, String fileType) {
+        String tempFileName = oldFileName.replace("." + fileType, "");
         Random ne = new Random();//实例化一个random的对象ne
-        int uuid = ne.nextInt(90000)+10000;//为变量赋随机值10000-99999
-        return  tempFileName + uuid + "." + fileType;
+        int uuid = ne.nextInt(90000) + 10000;//为变量赋随机值10000-99999
+        return tempFileName + uuid + "." + fileType;
     }
 
-    public static int getFileSize(String fileUrl){
+    public static int getFileSize(String fileUrl) {
         if (fileUrl == null || "".equals(fileUrl)) {
             return 0;
         }
@@ -123,7 +125,7 @@ public class FileUtil {
         } catch (Exception e) {
             return 0;
         } finally {
-            if (conn != null){
+            if (conn != null) {
                 conn.disconnect();
             }
         }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class FileVersionService extends BaseService<FileVersionEntity,Long> {
+public class FileVersionService extends BaseService<FileVersionEntity, Long> {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -18,7 +18,7 @@ public class FileVersionService extends BaseService<FileVersionEntity,Long> {
         this.baseRepository = baseRepository;
     }
 
-    public FileVersionRepository getRepository(){
+    public FileVersionRepository getRepository() {
         return (FileVersionRepository) this.baseRepository;
     }
 

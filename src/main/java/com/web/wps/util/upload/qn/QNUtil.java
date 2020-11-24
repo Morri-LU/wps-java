@@ -31,21 +31,22 @@ public class QNUtil {
 
     /**
      * 同名覆盖，不同名新建
+     *
      * @param key cFilename
      */
-    private void makeUploadManager(String key){
+    private void makeUploadManager(String key) {
         StringMap putPolicy = new StringMap();
         putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":$(fsize)}");
         Configuration cfg = new Configuration(Region.huanan());
         this.uploadManager = new UploadManager(cfg);
         Auth auth = Auth.create(qnConfig.getAccessKey(), qnConfig.getSecretKey());
-        this.upToken = auth.uploadToken(qnConfig.getBucket(),key,3600,putPolicy);
+        this.upToken = auth.uploadToken(qnConfig.getBucket(), key, 3600, putPolicy);
     }
 
     public ResFileDTO uploadInputStream(InputStream inputStream, String fileName) {
         try {
             String fileType = FileUtil.getFileTypeByName(fileName);
-            String uuidFileName = FileUtil.makeNewFileName(fileName,fileType);
+            String uuidFileName = FileUtil.makeNewFileName(fileName, fileType);
             String key = qnConfig.getDiskName() + uuidFileName;
             this.makeUploadManager(key);
             // 默认不指定key的情况下，以文件内容的hash值作为文件名
@@ -53,18 +54,18 @@ public class QNUtil {
             Response response = uploadManager.put(inputStream, key, upToken, null, null);
             MyPutRet myPutRet = response.jsonToObject(MyPutRet.class);
             String fileUrl = qnConfig.getUrl() + myPutRet.key;
-            return new ResFileDTO(fileUrl,fileName,key,fileType,myPutRet.fsize,myPutRet.hash);
+            return new ResFileDTO(fileUrl, fileName, key, fileType, myPutRet.fsize, myPutRet.hash);
         } catch (QiniuException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ResFileDTO uploadFile(File file){
+    public ResFileDTO uploadFile(File file) {
         try {
             String fileName = file.getName();
             String fileType = FileUtil.getFileTypeByName(fileName);
-            String uuidFileName = FileUtil.makeNewFileName(fileName,fileType);
+            String uuidFileName = FileUtil.makeNewFileName(fileName, fileType);
             String key = qnConfig.getDiskName() + uuidFileName;
             this.makeUploadManager(key);
             // 默认不指定key的情况下，以文件内容的hash值作为文件名
@@ -72,18 +73,18 @@ public class QNUtil {
             Response response = uploadManager.put(file, key, upToken);
             MyPutRet myPutRet = response.jsonToObject(MyPutRet.class);
             String fileUrl = qnConfig.getUrl() + myPutRet.key;
-            return new ResFileDTO(fileUrl,fileName,key,fileType,myPutRet.fsize,myPutRet.hash);
+            return new ResFileDTO(fileUrl, fileName, key, fileType, myPutRet.fsize, myPutRet.hash);
         } catch (QiniuException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ResFileDTO uploadFilePath(String filePath){
+    public ResFileDTO uploadFilePath(String filePath) {
         try {
             String fileName = FileUtil.getFileName(filePath);
             String fileType = FileUtil.getFileTypeByPath(filePath);
-            String uuidFileName = FileUtil.makeNewFileName(fileName,fileType);
+            String uuidFileName = FileUtil.makeNewFileName(fileName, fileType);
             String key = qnConfig.getDiskName() + uuidFileName;
             this.makeUploadManager(key);
             // 默认不指定key的情况下，以文件内容的hash值作为文件名
@@ -91,26 +92,26 @@ public class QNUtil {
             Response response = uploadManager.put(filePath, key, upToken);
             MyPutRet myPutRet = response.jsonToObject(MyPutRet.class);
             String fileUrl = qnConfig.getUrl() + myPutRet.key;
-            return new ResFileDTO(fileUrl,fileName,key,fileType,myPutRet.fsize,myPutRet.hash);
+            return new ResFileDTO(fileUrl, fileName, key, fileType, myPutRet.fsize, myPutRet.hash);
         } catch (QiniuException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ResFileDTO uploadMultipartFile(MultipartFile file){
+    public ResFileDTO uploadMultipartFile(MultipartFile file) {
         try {
             String fileName = file.getOriginalFilename();
             String fileType = FileUtil.getFileTypeByName(fileName);
-            String uuidFileName = FileUtil.makeNewFileName(fileName,fileType);
+            String uuidFileName = FileUtil.makeNewFileName(fileName, fileType);
             String key = qnConfig.getDiskName() + uuidFileName;
             this.makeUploadManager(key);
             // 默认不指定key的情况下，以文件内容的hash值作为文件名
 //            String key = file.getOriginalFilename();
-            Response response = uploadManager.put(file.getInputStream(), key, upToken,null,null);
+            Response response = uploadManager.put(file.getInputStream(), key, upToken, null, null);
             MyPutRet myPutRet = response.jsonToObject(MyPutRet.class);
             String fileUrl = qnConfig.getUrl() + myPutRet.key;
-            return new ResFileDTO(fileUrl,fileName,key,fileType,myPutRet.fsize,myPutRet.hash);
+            return new ResFileDTO(fileUrl, fileName, key, fileType, myPutRet.fsize, myPutRet.hash);
         } catch (IOException e) {
             e.printStackTrace();
         }

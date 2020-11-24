@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserService extends BaseService<UserEntity,String> {
+public class UserService extends BaseService<UserEntity, String> {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -24,26 +24,26 @@ public class UserService extends BaseService<UserEntity,String> {
         this.baseRepository = baseRepository;
     }
 
-    public UserRepository getRepository(){
+    public UserRepository getRepository() {
         return (UserRepository) this.baseRepository;
     }
 
-    public Map<String,Object> userInfo(JSONObject reqObj){
+    public Map<String, Object> userInfo(JSONObject reqObj) {
         List<String> ids = null;
 
-        if(reqObj != null) {
-            if(reqObj.containsKey("ids")) {
+        if (reqObj != null) {
+            if (reqObj.containsKey("ids")) {
                 ids = JSONArray.parseArray(reqObj.getString("ids"), String.class);
             }
         }
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         List<UserEntity> users = new ArrayList<>();
-        if(ids != null && !ids.isEmpty()) {
+        if (ids != null && !ids.isEmpty()) {
             UserEntity user;
             for (String id : ids) {
                 user = this.findOne(id);
-                if (user != null){
+                if (user != null) {
                     users.add(user);
                 }
             }

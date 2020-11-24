@@ -18,7 +18,7 @@ public class WpsUtil {
         this.wpsProperties = wpsProperties;
     }
 
-    public String getWpsUrl(Map<String,String> values,String fileType,String fileId){
+    public String getWpsUrl(Map<String, String> values, String fileType, String fileId) {
         String keyValueStr = SignatureUtil.getKeyValueStr(values);
         String signature = SignatureUtil.getSignature(values, wpsProperties.getAppsecret());
         String fileTypeCode = FileUtil.getFileTypeCode(fileType);
@@ -27,8 +27,8 @@ public class WpsUtil {
                 + keyValueStr + "_w_signature=" + signature;
     }
 
-    public String getTemplateWpsUrl(String fileType,String userId){
-        Map<String,String> values = new HashMap<String,String>(){
+    public String getTemplateWpsUrl(String fileType, String userId) {
+        Map<String, String> values = new HashMap<String, String>() {
             {
                 put("_w_appid", wpsProperties.getAppid());
                 put("_w_userid", userId);

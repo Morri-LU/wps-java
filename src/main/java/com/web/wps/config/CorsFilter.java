@@ -7,9 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- *  跨域
+ * 跨域
+ *
  * @author zm
- * @version  1.0.0
+ * @version 1.0.0
  * @since 2019年10月12日
  */
 @Component
@@ -26,8 +27,10 @@ public class CorsFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

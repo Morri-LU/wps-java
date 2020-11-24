@@ -12,7 +12,7 @@ public class FileDTO {
     }
 
     public FileDTO(String id, String name, int version, int size, String creator,
-                      long create_time, String download_url, UserAclBO user_acl, WatermarkBO watermark) {
+                   long create_time, String download_url, UserAclBO user_acl, WatermarkBO watermark) {
         this.id = id;
         this.name = name;
         this.version = version;

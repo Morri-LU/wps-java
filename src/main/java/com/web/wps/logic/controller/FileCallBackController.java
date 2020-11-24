@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -34,13 +35,13 @@ public class FileCallBackController extends BaseController {
     @GetMapping("info")
     public ResponseEntity<Object> getFileInfo(
             String _w_userid, String _w_filepath, String _w_filetype
-    ){
-        logger.info("获取文件元数据userId:{},path:{},type:{}",_w_userid,_w_filepath,_w_filetype);
+    ) {
+        logger.info("获取文件元数据userId:{},path:{},type:{}", _w_userid, _w_filepath, _w_filetype);
         try {
-            Map<String,Object> map =
-                    fileService.getFileInfo(_w_userid,_w_filepath,_w_filetype);
+            Map<String, Object> map =
+                    fileService.getFileInfo(_w_userid, _w_filepath, _w_filetype);
             return Response.success(map);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Response.bad("获取文件元数据异常");
         }
     }
@@ -51,8 +52,8 @@ public class FileCallBackController extends BaseController {
     @PostMapping("online")
     public ResponseEntity<Object> fileOnline(
             @RequestBody JSONObject obj
-    ){
-        logger.info("通知此文件目前有哪些人正在协作param:{}",JSON.toJSON(obj));
+    ) {
+        logger.info("通知此文件目前有哪些人正在协作param:{}", JSON.toJSON(obj));
         return Response.success();
     }
 
@@ -63,9 +64,9 @@ public class FileCallBackController extends BaseController {
     public ResponseEntity<Object> fileSave(
             @RequestBody MultipartFile file,
             String _w_userid
-    ){
+    ) {
         logger.info("上传文件新版本");
-        Map<String,Object> map = fileService.fileSave(file,_w_userid);
+        Map<String, Object> map = fileService.fileSave(file, _w_userid);
         return Response.success(map);
     }
 
@@ -75,9 +76,9 @@ public class FileCallBackController extends BaseController {
     @GetMapping("version/{version}")
     public ResponseEntity<Object> fileVersion(
             @PathVariable Integer version
-    ){
-        logger.info("获取特定版本的文件信息version:{}",version);
-        Map<String,Object> res = fileService.fileVersion(version);
+    ) {
+        logger.info("获取特定版本的文件信息version:{}", version);
+        Map<String, Object> res = fileService.fileVersion(version);
         return Response.success(res);
     }
 
@@ -88,9 +89,9 @@ public class FileCallBackController extends BaseController {
     public ResponseEntity<Object> fileRename(
             @RequestBody FileReqDTO req,
             String _w_userid
-    ){
-        logger.info("文件重命名param:{},userId:{}",JSON.toJSON(req),_w_userid);
-        fileService.fileRename(req.getName(),_w_userid);
+    ) {
+        logger.info("文件重命名param:{},userId:{}", JSON.toJSON(req), _w_userid);
+        fileService.fileRename(req.getName(), _w_userid);
         return Response.success();
     }
 
@@ -100,9 +101,9 @@ public class FileCallBackController extends BaseController {
     @PostMapping("history")
     public ResponseEntity<Object> fileHistory(
             @RequestBody FileReqDTO req
-    ){
-        logger.info("获取所有历史版本文件信息param:{}",JSON.toJSON(req));
-        Map<String,Object> result = fileService.fileHistory(req);
+    ) {
+        logger.info("获取所有历史版本文件信息param:{}", JSON.toJSON(req));
+        Map<String, Object> result = fileService.fileHistory(req);
         return Response.success(result);
     }
 
@@ -113,10 +114,22 @@ public class FileCallBackController extends BaseController {
     public ResponseEntity<Object> fileNew(
             @RequestBody MultipartFile file,
             String _w_userid
-    ){
-        logger.info("新建文件_w_userid:{}",_w_userid);
-        Map<String,Object> res = fileService.fileNew(file,_w_userid);
+    ) {
+        logger.info("新建文件_w_userid:{}", _w_userid);
+        Map<String, Object> res = fileService.fileNew(file, _w_userid);
         return Response.success(res);
+    }
+
+    /**
+     * 文件格式转换回调
+     */
+    @PostMapping("convertCallback")
+    public ResponseEntity<Object> callback(
+            HttpServletRequest request
+    ) {
+        logger.info("文件转换回掉");
+        fileService.convertCallBack(request);
+        return Response.success();
     }
 
 }

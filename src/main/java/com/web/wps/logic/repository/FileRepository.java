@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface FileRepository extends BaseRepository<FileEntity,String> {
+public interface FileRepository extends BaseRepository<FileEntity, String> {
 
     FileEntity findByName(String name);
 
@@ -31,7 +31,7 @@ public interface FileRepository extends BaseRepository<FileEntity,String> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "update w_file_t set deleted = 'Y' where id = ?1",nativeQuery = true)
+    @Query(value = "update w_file_t set deleted = 'Y' where id = ?1", nativeQuery = true)
     void delFile(String id);
 
 }

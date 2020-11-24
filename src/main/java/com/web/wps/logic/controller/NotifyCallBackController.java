@@ -24,8 +24,8 @@ public class NotifyCallBackController extends BaseController {
     @PostMapping("onnotify")
     public ResponseEntity<Object> onNotify(
             @RequestBody JSONObject obj
-    ){
-        logger.info("回调通知param:{}",JSON.toJSONString(obj));
+    ) {
+        logger.info("回调通知param:{}", JSON.toJSONString(obj));
         // TODO
         // 返回数据暂不处理
         return Response.success();

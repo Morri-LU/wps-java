@@ -15,7 +15,8 @@ public class Context {
 
     private static final ThreadLocal<Map<String, String>> securityMap = new ThreadLocal<>();
 
-    private Context() {}
+    private Context() {
+    }
 
     private static void init() {
         if (securityMap.get() == null) {

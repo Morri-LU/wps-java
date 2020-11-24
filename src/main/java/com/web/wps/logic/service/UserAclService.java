@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class UserAclService extends BaseService<UserAclEntity,Long> {
+public class UserAclService extends BaseService<UserAclEntity, Long> {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -18,12 +18,12 @@ public class UserAclService extends BaseService<UserAclEntity,Long> {
         this.baseRepository = baseRepository;
     }
 
-    public UserAclRepository getRepository(){
+    public UserAclRepository getRepository() {
         return (UserAclRepository) this.baseRepository;
     }
 
-    public void saveUserFileAcl(String userId,String fileId){
-        this.save(new UserAclEntity(userId,fileId));
+    public void saveUserFileAcl(String userId, String fileId) {
+        this.save(new UserAclEntity(userId, fileId));
     }
 
 }

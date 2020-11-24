@@ -16,7 +16,9 @@ public class FileHisDTO {
     private UserDTO creator;
     private UserDTO modifier;
 
-    public FileHisDTO(){super();}
+    public FileHisDTO() {
+        super();
+    }
 
     public FileHisDTO(String id, String name, int version, int size,
                       long create_time, long modify_time, String download_url,

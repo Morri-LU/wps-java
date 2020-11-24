@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class UserMvcAdapter extends WebMvcConfigurerAdapter {
 
-    private static String[] URL_PATTERNS = new String[] { "/v1/**"};
+    private static String[] URL_PATTERNS = new String[]{"/v1/**"};
 
     /**
      * 注册拦截器

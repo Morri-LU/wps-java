@@ -25,40 +25,42 @@ public class FileEntity extends BaseEntity {
     download_url: "http://www.xxx.cn/v1/file?fid=f132aa30a87064",  //文档下载地址
     */
 
-	@Id
-	@GenericGenerator(name="idGenerator", strategy="uuid")
-	@GeneratedValue(generator="idGenerator")
-	@Column(length = 50)
-	private String id;
-	private String name;
-	private int version;
-	private int size;
-	private String creator;
-	private String modifier;
-	// JPA无法识别为驼峰，故指定字段
-	@Column(name = "create_time")
-	private long create_time;
-	@Column(name = "modify_time")
-	private long modify_time;
-	@Column(name = "download_url")
-	private String download_url;
+    @Id
+    @GenericGenerator(name = "idGenerator", strategy = "uuid")
+    @GeneratedValue(generator = "idGenerator")
+    @Column(length = 50)
+    private String id;
+    private String name;
+    private int version;
+    private int size;
+    private String creator;
+    private String modifier;
+    // JPA无法识别为驼峰，故指定字段
+    @Column(name = "create_time")
+    private long create_time;
+    @Column(name = "modify_time")
+    private long modify_time;
+    @Column(name = "download_url")
+    private String download_url;
 
-	private String deleted;
-	private String canDelete;
+    private String deleted;
+    private String canDelete;
 
-	public FileEntity(){super();}
+    public FileEntity() {
+        super();
+    }
 
-	public FileEntity(String name, int version, int size, String creator,
-					  String modifier, long create_time, long modify_time, String download_url) {
-		this.name = name;
-		this.version = version;
-		this.size = size;
-		this.creator = creator;
-		this.modifier = modifier;
-		this.create_time = create_time;
-		this.modify_time = modify_time;
-		this.download_url = download_url;
-		this.deleted = "N";
-		this.canDelete = "Y";
-	}
+    public FileEntity(String name, int version, int size, String creator,
+                      String modifier, long create_time, long modify_time, String download_url) {
+        this.name = name;
+        this.version = version;
+        this.size = size;
+        this.creator = creator;
+        this.modifier = modifier;
+        this.create_time = create_time;
+        this.modify_time = modify_time;
+        this.download_url = download_url;
+        this.deleted = "N";
+        this.canDelete = "Y";
+    }
 }

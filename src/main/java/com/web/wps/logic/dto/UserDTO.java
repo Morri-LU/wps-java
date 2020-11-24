@@ -12,7 +12,9 @@ public class UserDTO {
     private String permission = "read";
     private String avatar_url = "";
 
-    public UserDTO(){super();}
+    public UserDTO() {
+        super();
+    }
 
     public UserDTO(String id, String name, String permission, String avatar_url) {
         this.id = id;

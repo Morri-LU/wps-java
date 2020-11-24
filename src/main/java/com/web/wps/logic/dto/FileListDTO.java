@@ -25,7 +25,7 @@ public class FileListDTO {
     private String download_url;
 
     public FileListDTO(String id, String name, int version, int size, String creator,
-                       String modifier, long createTime, long modifyTime, String download_url,String userId) {
+                       String modifier, long createTime, long modifyTime, String download_url, String userId) {
         this.id = id;
         this.name = name;
         this.version = version;
