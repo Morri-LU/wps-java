@@ -146,7 +146,7 @@ public class UserImplController extends BaseController {
     /**
      * 获取转换文件
      *
-     * @param taskId 任务id
+     * @param taskId 任务id，由convert接口生成
      */
     @GetMapping("getConvert")
     public ResponseEntity<Object> getConvert(String taskId) {

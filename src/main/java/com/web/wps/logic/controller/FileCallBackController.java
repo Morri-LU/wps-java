@@ -121,7 +121,7 @@ public class FileCallBackController extends BaseController {
     }
 
     /**
-     * 文件格式转换回调
+     * 文件格式转换回调--wps官方回掉用
      */
     @PostMapping("convertCallback")
     public ResponseEntity<Object> callback(

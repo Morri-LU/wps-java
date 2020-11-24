@@ -83,6 +83,12 @@ public class FileService extends BaseService<FileEntity, String> {
         return (FileRepository) this.baseRepository;
     }
 
+    /**
+     * 获取预览用URL
+     *
+     * @param fileUrl    文件url
+     * @param checkToken 是否校验token
+     */
     public Token getViewUrl(String fileUrl, boolean checkToken) {
         Token t = new Token();
 
@@ -112,6 +118,13 @@ public class FileService extends BaseService<FileEntity, String> {
         return t;
     }
 
+    /**
+     * 获取预览用URL
+     *
+     * @param fileId     文件id
+     * @param userId     用户id
+     * @param checkToken 是否校验token
+     */
     public Token getViewUrl(String fileId, String userId, boolean checkToken) {
         FileEntity fileEntity = this.findOne(fileId);
         if (fileEntity != null) {
@@ -145,15 +158,27 @@ public class FileService extends BaseService<FileEntity, String> {
         return null;
     }
 
-    public Map<String, Object> getFileInfo(String userId, String filePath, String _w_filetype) {
-        if ("web".equalsIgnoreCase(_w_filetype)) {
+    /**
+     * 获取预览用URL
+     *
+     * @param filePath 文件路径
+     * @param userId   用户id
+     * @param type     请求预览文件类型
+     */
+    public Map<String, Object> getFileInfo(String userId, String filePath, String type) {
+        if ("web".equalsIgnoreCase(type)) {
             return getWebFileInfo(filePath);
-        } else if ("db".equalsIgnoreCase(_w_filetype)) {
+        } else if ("db".equalsIgnoreCase(type)) {
             return getDbFileInfo(userId);
         }
         return null;
     }
 
+    /**
+     * 获取文件元数据
+     *
+     * @param filePath 文件路径
+     */
     private Map<String, Object> getWebFileInfo(String filePath) {
         logger.info("_w_filepath:{}", filePath);
 
@@ -180,6 +205,11 @@ public class FileService extends BaseService<FileEntity, String> {
         };
     }
 
+    /**
+     * 获取文件元数据
+     *
+     * @param userId 用户id
+     */
     private Map<String, Object> getDbFileInfo(String userId) {
         String fileId = Context.getFileId();
 
@@ -226,6 +256,12 @@ public class FileService extends BaseService<FileEntity, String> {
         };
     }
 
+    /**
+     * 文件重命名
+     *
+     * @param fileName 文件名
+     * @param userId   用户id
+     */
     public void fileRename(String fileName, String userId) {
         String fileId = Context.getFileId();
         FileEntity file = this.findOne(fileId);
@@ -238,6 +274,12 @@ public class FileService extends BaseService<FileEntity, String> {
         }
     }
 
+    /**
+     * 新建文件
+     *
+     * @param file   文件
+     * @param userId 用户id
+     */
     public Map<String, Object> fileNew(MultipartFile file, String userId) {
         ResFileDTO resFileDTO;
         if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
@@ -267,6 +309,9 @@ public class FileService extends BaseService<FileEntity, String> {
         return map;
     }
 
+    /**
+     * 查询文件历史记录
+     */
     public Map<String, Object> fileHistory(FileReqDTO req) {
         List<FileHisDTO> result = new ArrayList<>(1);
         if (req.getId() != null) {
@@ -311,6 +356,12 @@ public class FileService extends BaseService<FileEntity, String> {
         return map;
     }
 
+    /**
+     * 保存文件
+     *
+     * @param mFile  文件
+     * @param userId 用户id
+     */
     public Map<String, Object> fileSave(MultipartFile mFile, String userId) {
         Date date = new Date();
         // 上传
@@ -354,6 +405,11 @@ public class FileService extends BaseService<FileEntity, String> {
         return map;
     }
 
+    /**
+     * 查询文件版本
+     *
+     * @param version 版本号
+     */
     public Map<String, Object> fileVersion(int version) {
         FileDTO fileInfo = new FileDTO();
         String fileId = Context.getFileId();
@@ -368,15 +424,26 @@ public class FileService extends BaseService<FileEntity, String> {
         return map;
     }
 
+    /**
+     * 获取文件列表
+     */
     public List<FileListDTO> getFileList() {
         return this.getRepository().findAllFile();
     }
 
+    /**
+     * 获取文件列表--分页
+     */
     public Page<FileListDTO> getFileListByPage(com.web.wps.base.Page page) {
         PageRequest pages = new PageRequest(page.getPage() - 1, page.getSize());
         return this.getRepository().getAllFileByPage(pages);
     }
 
+    /**
+     * 删除文件
+     *
+     * @param id 文件id
+     */
     public int delFile(String id) {
         FileEntity file = this.findOne(id);
         if (file != null) {
@@ -392,6 +459,11 @@ public class FileService extends BaseService<FileEntity, String> {
         }
     }
 
+    /**
+     * 上传文件
+     *
+     * @param file 文件
+     */
     public void uploadFile(MultipartFile file) {
         String uploadUserId = "3";
         ResFileDTO resFileDTO;
@@ -415,6 +487,9 @@ public class FileService extends BaseService<FileEntity, String> {
         watermarkService.saveWatermark(f.getId());
     }
 
+    /**
+     * 创建临时文件
+     */
     public String createTemplateFile(String template) {
         boolean typeTrue = FileUtil.checkCode(template);
         if (typeTrue) {
@@ -475,6 +550,9 @@ public class FileService extends BaseService<FileEntity, String> {
         }
     }
 
+    /**
+     * 文件格式转换回调
+     */
     public void convertCallBack(HttpServletRequest request) {
         try {
             BufferedReader buf = request.getReader();
@@ -501,6 +579,11 @@ public class FileService extends BaseService<FileEntity, String> {
         }
     }
 
+    /**
+     * 文件转换查询
+     *
+     * @param taskId 任务id，由convertFil接口生成
+     */
     public String getConvertQueryRes(String taskId) {
         String headerDate = Common.getGMTDate();
         String downLoadUrl = "";
