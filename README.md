@@ -1,5 +1,10 @@
 # wps-view-java
 
+## 本次更新11-24
+1. 集成wps官方文档转换API
+2. 代码样式调整
+3. 用阿里oss的用户，增加一个阿里官方转换文档方法
+
 ## 本次更新06-28
 1. 升级oss-sdk（强，不升级可能导致上传oss报错）
 2. 修改在线文档预览获取文件大小
@@ -44,7 +49,7 @@ react:
 ## 代码结构可自行调整
 
 ## 彩蛋
-ApplicationTests类文件中，有个OSS地址转在线预览地址方法，但是是收费的，相关费用自行了解
+ApplicationTests类文件中，有个OSS地址转在线预览地址方法，以及文档转换方法，但是是收费的，相关费用自行了解
 
 <br><br>
 ######感谢[caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)

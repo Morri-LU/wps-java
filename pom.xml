@@ -124,6 +124,12 @@
             <version>4.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-imm</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
