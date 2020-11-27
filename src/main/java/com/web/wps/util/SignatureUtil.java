@@ -87,27 +87,31 @@ public class SignatureUtil {
 
     /**
      * 生成签名
-     * @param action GET、POST
-     * @param url 调用接口的url，转换接口时传入接口地址不带参；查询接口时地址带参数
+     *
+     * @param action     GET、POST
+     * @param url        调用接口的url，转换接口时传入接口地址不带参；查询接口时地址带参数
      * @param contentMd5 通过getMD5方法计算的值
      * @param headerDate 通过getGMTDate方法计算的值
-     * */
-    public static String getSignature(String action , String url , String contentMd5 , String headerDate, String convertAppsecret){
-        try{
+     */
+    private static String getSignature(String action, String url, String contentMd5, String headerDate, String convertAppsecret) {
+        try {
             URL ur = new URL(url);
             String key = ur.getPath();
-            if (!StringUtils.isEmpty(ur.getQuery())){
-                key = key + "?"+ ur.getQuery();
+            if (!StringUtils.isEmpty(ur.getQuery())) {
+                key = key + "?" + ur.getQuery();
             }
-            String signStr = action + "\n" + contentMd5 + "\n" + Common.CONTENTTYPE + "\n" + headerDate + "\n" + key ;
+            String signStr = action + "\n" + contentMd5 + "\n" + Common.CONTENTTYPE + "\n" + headerDate + "\n" + key;
             // 进行hmac sha1 签名
             byte[] bytes = HmacUtils.hmacSha1(convertAppsecret.getBytes(), signStr.getBytes());
             return encodeBase64String(bytes);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getAuthorization(String action, String url, String contentMd5, String headerDate, String appid, String convertAppsecret) {
+        return "WPS " + appid + ":" + getSignature(action, url, contentMd5, headerDate, convertAppsecret); //签名
     }
 
 }

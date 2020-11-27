@@ -509,7 +509,7 @@ public class FileService extends BaseService<FileEntity, String> {
      * @param exportType 输出类型
      */
     public void convertFile(String taskId, String srcUri, String exportType) {
-        if (StringUtils.isEmpty(taskId)){
+        if (StringUtils.isEmpty(taskId)) {
             taskId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
         }
         System.out.println("--convertFile:taskId:-> " + taskId);
@@ -522,10 +522,8 @@ public class FileService extends BaseService<FileEntity, String> {
         param.put("TaskId", taskId);
         //Content-MD5 表示请求内容数据的MD5值，对消息内容（不包括头部）计算MD5值获得128比特位数字，对该数字进行base64编码而得到，如”eB5eJF1ptWaXm4bijSPyxw==”，也可以为空；
         String contentMd5 = Common.getMD5(param);
-        //VERB表示HTTP 请求的Method的字符串，可选值有PUT、GET、POST、HEAD、DELETE等；
-        String signature = SignatureUtil.getSignature("POST", convertProperties.getConvert(), contentMd5, headerDate, convertProperties.getAppsecret());
         //签名url的参数不带请求参数
-        String authorization = "WPS " + convertProperties.getAppid() + ":" + signature; //签名
+        String authorization = SignatureUtil.getAuthorization("POST", convertProperties.getConvert(), contentMd5, headerDate, convertProperties.getAppid(), convertProperties.getAppsecret()); //签名
 
         //header参数
         Map<String, String> headers = new LinkedHashMap<>();
@@ -593,8 +591,7 @@ public class FileService extends BaseService<FileEntity, String> {
             //请求参数
             String contentMd5 = Common.getMD5(null); //请求内容数据的MD5值，用null作入参
             String url = convertProperties.getQuery() + "?TaskId=" + taskId + "&AppId=" + convertProperties.getAppid();
-            String signature = SignatureUtil.getSignature("GET", url, contentMd5, headerDate, convertProperties.getAppsecret());//签名url的参数带请求参数
-            String authorization = "WPS " + convertProperties.getAppid() + ":" + signature; //签名
+            String authorization = SignatureUtil.getAuthorization("GET", url, contentMd5, headerDate, convertProperties.getAppid(), convertProperties.getAppsecret()); //签名
 
             //header参数
             Map<String, String> headers = new LinkedHashMap<>();
