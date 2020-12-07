@@ -9,10 +9,7 @@ import com.web.wps.config.Context;
 import com.web.wps.logic.dto.*;
 import com.web.wps.logic.entity.*;
 import com.web.wps.logic.repository.FileRepository;
-import com.web.wps.propertie.ConvertProperties;
-import com.web.wps.propertie.ServerProperties;
-import com.web.wps.propertie.UploadProperties;
-import com.web.wps.propertie.WpsProperties;
+import com.web.wps.propertie.*;
 import com.web.wps.util.*;
 import com.web.wps.util.file.FileUtil;
 import com.web.wps.util.upload.ResFileDTO;
@@ -48,17 +45,15 @@ public class FileService extends BaseService<FileEntity, String> {
     private final WatermarkService watermarkService;
     private final UserService userService;
     private final FileVersionService fileVersionService;
+    private final RedirectProperties redirect;
     private final QNUtil qnUtil;
     private final UploadProperties uploadProperties;
-    private final ConvertProperties convertProperties;
-    private final ServerProperties serverProperties;
-
 
     @Autowired
     public FileService(WpsUtil wpsUtil, WpsProperties wpsProperties, OSSUtil ossUtil,
                        UserAclService userAclService, WatermarkService watermarkService,
                        UserService userService, FileVersionService fileVersionService,
-                       QNUtil qnUtil, UploadProperties uploadProperties, ConvertProperties convertProperties, ServerProperties serverProperties) {
+                       RedirectProperties redirect, QNUtil qnUtil, UploadProperties uploadProperties) {
         this.wpsUtil = wpsUtil;
         this.wpsProperties = wpsProperties;
         this.ossUtil = ossUtil;
@@ -66,11 +61,15 @@ public class FileService extends BaseService<FileEntity, String> {
         this.watermarkService = watermarkService;
         this.userService = userService;
         this.fileVersionService = fileVersionService;
+        this.redirect = redirect;
         this.qnUtil = qnUtil;
         this.uploadProperties = uploadProperties;
-        this.convertProperties = convertProperties;
-        this.serverProperties = serverProperties;
     }
+
+    @Autowired
+    private ConvertProperties convertProperties;
+    @Autowired
+    private ServerProperties serverProperties;
 
     @Override
     @SuppressWarnings("unchecked")
@@ -96,6 +95,7 @@ public class FileService extends BaseService<FileEntity, String> {
         // fileId使用uuid保证出现同样的文件而是最新文件
         UUID randomUUID = UUID.randomUUID();
         String uuid = randomUUID.toString().replace("-", "");
+        String userId = Context.getUserId();
 
         Map<String, String> values = new HashMap<String, String>() {
             {
@@ -103,6 +103,7 @@ public class FileService extends BaseService<FileEntity, String> {
                 if (checkToken) {
                     put("_w_tokentype", "1");
                 }
+                put(redirect.getKey(), redirect.getValue());
                 put("_w_userid", "-1");
                 put("_w_filepath", fileUrl);
                 put("_w_filetype", "web");
@@ -141,6 +142,7 @@ public class FileService extends BaseService<FileEntity, String> {
                     if (checkToken) {
                         put("_w_tokentype", "1");
                     }
+                    put(redirect.getKey(), redirect.getValue());
                     put("_w_filepath", fileName);
                     put("_w_userid", userId);
                     put("_w_filetype", "db");

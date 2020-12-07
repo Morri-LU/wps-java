@@ -28,6 +28,8 @@ public class UserHandlerAdapter extends HandlerInterceptorAdapter {
         String fileId = Request.getHeaderParam(request, Context.FILE_ID_KEY);
         String agent = Request.getHeaderParam(request, Context.USER_AGENT);
 
+        String userId = Request.getHeaderParam(request,Context.USER_ID);
+
         String appId = Request.getQueryParam(request, Context.APP_ID);
         String signature = Request.getQueryParam(request, Context.SIGNATURE);
 
@@ -40,6 +42,7 @@ public class UserHandlerAdapter extends HandlerInterceptorAdapter {
         Context.setFileId(fileId);
         Context.setAgent(agent);
         Context.setAppId(appId);
+        Context.setUserId(userId);
         Context.setSignature(signature);
 
         // 当是用户自定义接口，直接通过(有点废话，举个例子而已)

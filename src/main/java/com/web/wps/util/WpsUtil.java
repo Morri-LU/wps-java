@@ -1,5 +1,6 @@
 package com.web.wps.util;
 
+import com.web.wps.propertie.RedirectProperties;
 import com.web.wps.propertie.WpsProperties;
 import com.web.wps.util.file.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import java.util.Map;
 public class WpsUtil {
 
     private final WpsProperties wpsProperties;
+    private final RedirectProperties redirect;
 
     @Autowired
-    public WpsUtil(WpsProperties wpsProperties) {
+    public WpsUtil(WpsProperties wpsProperties,RedirectProperties redirect) {
         this.wpsProperties = wpsProperties;
+        this.redirect = redirect;
     }
 
     public String getWpsUrl(Map<String, String> values, String fileType, String fileId) {
@@ -30,6 +33,7 @@ public class WpsUtil {
     public String getTemplateWpsUrl(String fileType, String userId) {
         Map<String, String> values = new HashMap<String, String>() {
             {
+                put(redirect.getKey(), redirect.getValue());
                 put("_w_appid", wpsProperties.getAppid());
                 put("_w_userid", userId);
             }

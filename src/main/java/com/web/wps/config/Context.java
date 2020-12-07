@@ -13,6 +13,8 @@ public class Context {
     final static String APP_ID = "_w_appid";
     final static String SIGNATURE = "_w_signature";
 
+    final static String USER_ID = "_w_user_id";
+
     private static final ThreadLocal<Map<String, String>> securityMap = new ThreadLocal<>();
 
     private Context() {
@@ -81,6 +83,17 @@ public class Context {
             return null;
         else
             return securityMap.get().get(SIGNATURE);
+    }
+
+    static void setUserId(String userId) {
+        securityMap.get().put(USER_ID, userId);
+    }
+
+    public static String getUserId() {
+        if (securityMap.get() == null)
+            return null;
+        else
+            return securityMap.get().get(USER_ID);
     }
 
 }
