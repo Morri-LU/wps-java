@@ -51,5 +51,12 @@ react:
 ## 彩蛋
 ApplicationTests类文件中，有个OSS地址转在线预览地址方法，以及文档转换方法，但是是收费的，相关费用自行了解
 
-<br><br>
-######感谢[caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)
+<br>
+
+##### 感谢
+[caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)
+<br/>
+
+## 特别鸣谢
+#### [JetBrains](https://www.jetbrains.com/?from=wps-view-java) 提供的license
+<img src="https://ossfile.ljserver.cn/uPic/jetbrains-variant-3.svg" alt="jetbrains-variant-3" style="zoom:0.1%;" />
