@@ -518,7 +518,11 @@ public class FileService extends BaseService<FileEntity, String> {
         param.put("SrcUri", srcUri);
         param.put("FileName", FileUtil.getFileName(srcUri));
         param.put("ExportType", exportType);
-        param.put("CallBack", serverProperties.getDomain() + ":" + serverProperties.getPort() + "/v1/3rd/file/convertCallback");//回调地址，文件转换后的通知地址，需保证可访问
+        Integer port = null;
+        if (serverProperties.getPort() != 443 && serverProperties.getPort() != 80){
+            port = serverProperties.getPort();
+        }
+        param.put("CallBack", serverProperties.getDomain() + (port == null ? "" : (":" + port)) + "/v1/3rd/file/convertCallback");//回调地址，文件转换后的通知地址，需保证可访问
         param.put("TaskId", taskId);
         //Content-MD5 表示请求内容数据的MD5值，对消息内容（不包括头部）计算MD5值获得128比特位数字，对该数字进行base64编码而得到，如”eB5eJF1ptWaXm4bijSPyxw==”，也可以为空；
         String contentMd5 = Common.getMD5(param);
