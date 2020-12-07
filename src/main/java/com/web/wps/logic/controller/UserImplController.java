@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.web.wps.base.BaseController;
 import com.web.wps.base.Response;
 import com.web.wps.logic.dto.FileListDTO;
+import com.web.wps.logic.entity.UserEntity;
 import com.web.wps.logic.service.FileService;
+import com.web.wps.logic.service.UserService;
 import com.web.wps.util.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,11 +25,13 @@ import java.util.List;
 public class UserImplController extends BaseController {
 
     @Autowired
-    public UserImplController(FileService fileService) {
+    public UserImplController(FileService fileService, UserService userService) {
         this.fileService = fileService;
+        this.userService = userService;
     }
 
     private final FileService fileService;
+    private final UserService userService;
 
     /**
      * 获取网络文件预览URL
@@ -129,6 +133,15 @@ public class UserImplController extends BaseController {
     ) {
         Object newUrl = fileService.createTemplateFile(template);
         return Response.success(newUrl);
+    }
+
+    /**
+     * 获取用户列表
+     */
+    @GetMapping("getUserList")
+    public ResponseEntity<Object> getUserList(){
+        List<UserEntity> list = userService.getUserList();
+        return Response.success(list);
     }
 
     /**

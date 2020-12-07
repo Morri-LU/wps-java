@@ -53,4 +53,8 @@ public class UserService extends BaseService<UserEntity, String> {
         return map;
     }
 
+    public List<UserEntity> getUserList(){
+        return  (List<UserEntity>) this.findAll();
+    }
+
 }
