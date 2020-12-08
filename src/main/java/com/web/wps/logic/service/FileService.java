@@ -219,7 +219,7 @@ public class FileService extends BaseService<FileEntity, String> {
         FileEntity fileEntity = this.findOne(fileId);
 
         // 初始化文件读写权限为read
-        String permission = "read";
+        String permission;
 
         // 增加用户权限
         UserAclEntity userAclEntity = userAclService.getRepository().findFirstByFileIdAndUserId(fileId, userId);
@@ -227,6 +227,10 @@ public class FileService extends BaseService<FileEntity, String> {
         if (userAclEntity != null) {
             BeanUtils.copyProperties(userAclEntity, userAcl);
             permission = userAclEntity.getPermission();
+        } else {
+            userAcl.setHistory(1);
+            userAcl.setRename(1);
+            permission = "write";
         }
 
         // 增加水印
@@ -521,7 +525,7 @@ public class FileService extends BaseService<FileEntity, String> {
         param.put("FileName", FileUtil.getFileName(srcUri));
         param.put("ExportType", exportType);
         Integer port = null;
-        if (serverProperties.getPort() != 443 && serverProperties.getPort() != 80){
+        if (serverProperties.getPort() != 443 && serverProperties.getPort() != 80) {
             port = serverProperties.getPort();
         }
         param.put("CallBack", serverProperties.getDomain() + (port == null ? "" : (":" + port)) + "/v1/3rd/file/convertCallback");//回调地址，文件转换后的通知地址，需保证可访问
