@@ -22,6 +22,7 @@
 ### 演示地址
 vue:
 [https://ljserver.cn/wpsonline](https://ljserver.cn/wpsonline)
+
 react:
 [https://ljserver.cn/wpsonline-react](https://ljserver.cn/wpsonline-react)
 
@@ -40,9 +41,11 @@ react:
 3. 设计
     - 详见resources下的 导图.png 和 表结构.png
 4. 前端代码地址
-vue:
+
+    vue:
 [https://gitee.com/mose-x/wps-view-vue.git](https://gitee.com/mose-x/wps-view-vue.git)
-react:
+
+    react:
 [https://gitee.com/mose-x/wps-view-react.git](https://gitee.com/mose-x/wps-view-react.git)
 
 ## 配置文件中的参数部分可做参考
@@ -50,7 +53,6 @@ react:
 
 ## 彩蛋
 ApplicationTests类文件中，有个OSS地址转在线预览地址方法，以及文档转换方法，但是是收费的，相关费用自行了解
-
 <br>
 
 ##### 感谢
