@@ -23,7 +23,7 @@ CREATE TABLE `w_file_t`  (
 -- ----------------------------
 -- Records of w_file_t
 -- ----------------------------
-INSERT INTO `w_file_t` VALUES ('1', 'log.doc', 1, 25, '1', 1563079046, '1', 1563079046, 'https://xxx/log.doc');
+INSERT INTO `w_file_t` (id,name,version,size,creator,create_time,modifier,modify_time,download_url)VALUES ('1', 'log.doc', 1, 25, '1', 1563079046, '1', 1563079046, 'https://xxx/log.doc');
 
 -- ----------------------------
 -- Table structure for w_file_version_t
@@ -101,5 +101,4 @@ CREATE TABLE `w_user_t`  (
 -- ----------------------------
 INSERT INTO `w_user_t` VALUES ('1', '张三', 'https://xxx/user0.png');
 INSERT INTO `w_user_t` VALUES ('2', '李四', 'https://xxx/user1.png');
-
 SET FOREIGN_KEY_CHECKS = 1;
