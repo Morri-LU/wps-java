@@ -536,11 +536,7 @@ public class FileService extends BaseService<FileEntity, String> {
         String authorization = SignatureUtil.getAuthorization("POST", convertProperties.getConvert(), contentMd5, headerDate, convertProperties.getAppid(), convertProperties.getAppsecret()); //签名
 
         //header参数
-        Map<String, String> headers = new LinkedHashMap<>();
-        headers.put(HttpHeaders.CONTENT_TYPE, Common.CONTENTTYPE);
-        headers.put(HttpHeaders.DATE, headerDate);
-        headers.put(HttpHeaders.CONTENT_MD5, contentMd5);//文档上是 "Content-Md5"
-        headers.put(HttpHeaders.AUTHORIZATION, authorization);
+        Map<String, String> headers = makeHeader(headerDate, contentMd5, authorization);
 
         // 请求
         String result = HttpUtil.post(convertProperties.getConvert(), headers, JSON.toJSONString(param));
@@ -604,11 +600,7 @@ public class FileService extends BaseService<FileEntity, String> {
             String authorization = SignatureUtil.getAuthorization("GET", url, contentMd5, headerDate, convertProperties.getAppid(), convertProperties.getAppsecret()); //签名
 
             //header参数
-            Map<String, String> headers = new LinkedHashMap<>();
-            headers.put(HttpHeaders.CONTENT_TYPE, Common.CONTENTTYPE);
-            headers.put(HttpHeaders.DATE, headerDate);
-            headers.put(HttpHeaders.CONTENT_MD5, contentMd5);//文档上是 "Content-Md5"
-            headers.put(HttpHeaders.AUTHORIZATION, authorization);
+            Map<String, String> headers = makeHeader(headerDate, contentMd5, authorization);
 
             //开始调用
             String result = HttpUtil.get(url, headers);
@@ -639,6 +631,15 @@ public class FileService extends BaseService<FileEntity, String> {
             logger.error("recordWPSConvertResult处理出错，错误={}", e.getMessage(), e);
         }
         return downLoadUrl;
+    }
+
+    private Map<String, String> makeHeader(String headerDate, String contentMd5, String authorization) {
+        Map<String, String> headers = new LinkedHashMap<>();
+        headers.put(HttpHeaders.CONTENT_TYPE, Common.CONTENTTYPE);
+        headers.put(HttpHeaders.DATE, headerDate);
+        headers.put(HttpHeaders.CONTENT_MD5, contentMd5);//文档上是 "Content-Md5"
+        headers.put(HttpHeaders.AUTHORIZATION, authorization);
+        return headers;
     }
 
 }
