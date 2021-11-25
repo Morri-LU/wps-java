@@ -46,12 +46,14 @@ public class FileEntity extends BaseEntity {
     private String deleted;
     private String canDelete;
 
+    private String fileLocation;
+
     public FileEntity() {
         super();
     }
 
     public FileEntity(String name, int version, int size, String creator,
-                      String modifier, long create_time, long modify_time, String download_url) {
+                      String modifier, long create_time, long modify_time, String download_url, String fileLocation) {
         this.name = name;
         this.version = version;
         this.size = size;
@@ -62,5 +64,6 @@ public class FileEntity extends BaseEntity {
         this.download_url = download_url;
         this.deleted = "N";
         this.canDelete = "Y";
+        this.fileLocation = fileLocation;
     }
 }

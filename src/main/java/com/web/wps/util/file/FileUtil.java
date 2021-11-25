@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class FileUtil {
 
     // office
@@ -129,6 +131,22 @@ public class FileUtil {
                 conn.disconnect();
             }
         }
+    }
+
+    // 这里cn 或者 com 根据自己域名适当调整下哟
+    // TODO
+    public static String subFileUrl(String url) {
+        int index = url.indexOf("?");
+        if (index != -1) {
+            url = url.substring(0, index);
+        }
+
+        int comIndex = url.indexOf(".cn/");
+        if (comIndex != -1) {
+            url = StringUtils.substringAfter(url, ".cn/");
+        }
+
+        return url;
     }
 
 }

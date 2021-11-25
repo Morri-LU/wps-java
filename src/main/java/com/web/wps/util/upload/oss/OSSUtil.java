@@ -401,6 +401,18 @@ public class OSSUtil {
     }
 
     /**
+     * 根据key删除OSS服务器上的文件
+     *
+     * @param key Bucket下的文件的路径名+文件名
+     */
+    public void deleteFile(String key) {
+        OSSClient client = this.getOSSClient();
+        client.deleteObject(oss.getBucketName(), oss.getDiskName() + key);
+        client.shutdown();
+        System.out.println("删除" + oss.getBucketName() + "下的文件" + oss.getDiskName() + key + "成功");
+    }
+
+    /**
      * 通过文件名判断并获取OSS服务文件上传时文件的contentType
      *
      * @param fileName 文件名

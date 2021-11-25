@@ -300,7 +300,7 @@ public class FileService extends BaseService<FileEntity, String> {
         Date date = new Date();
         long dataTime = date.getTime();
         // 保存文件
-        FileEntity f = new FileEntity(fileName, 1, fileSize, userId, userId, dataTime, dataTime, fileUrl);
+        FileEntity f = new FileEntity(fileName, 1, fileSize, userId, userId, dataTime, dataTime, fileUrl, uploadProperties.getFileLocation());
         this.save(f);
 
         // 处理权限
@@ -457,6 +457,17 @@ public class FileService extends BaseService<FileEntity, String> {
             if ("Y".equalsIgnoreCase(file.getCanDelete())) {
                 // del
                 this.getRepository().delFile(id);
+                // del oss or qn file
+                try {
+                    if (file.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
+                        qnUtil.deleteFile(FileUtil.subFileUrl(file.getDownload_url()));
+                    } else {
+                        ossUtil.deleteFile(FileUtil.subFileUrl(file.getDownload_url()));
+                    }
+                } catch (Exception e) {
+                    logger.error("删除服务存储文件失败！");
+                    e.printStackTrace();
+                }
                 return 1;
             } else {
                 return 0;
@@ -485,7 +496,7 @@ public class FileService extends BaseService<FileEntity, String> {
         long dataTime = date.getTime();
         // 保存文件
         FileEntity f = new FileEntity(resFileDTO.getFileName(), 1, ((int) resFileDTO.getFileSize()),
-                uploadUserId, uploadUserId, dataTime, dataTime, resFileDTO.getFileUrl());
+                uploadUserId, uploadUserId, dataTime, dataTime, resFileDTO.getFileUrl(), uploadProperties.getFileLocation());
         this.save(f);
 
         // 处理权限
