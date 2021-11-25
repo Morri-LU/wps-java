@@ -551,7 +551,7 @@ public class FileService extends BaseService<FileEntity, String> {
                 String errorMsg = "文件格式转换失败";
                 if (dataJson.get("Message") != null) {
                     String message = dataJson.get("Message").toString();
-                    errorMsg = errorMsg + message;
+                    errorMsg += message;
                 }
                 //失败
             }
@@ -577,7 +577,7 @@ public class FileService extends BaseService<FileEntity, String> {
                     String taskId = (String) dataJson.get("TaskId");
                     String url = getConvertQueryRes(taskId);
                     if (!StringUtils.isEmpty(url) && code.equalsIgnoreCase(HttpStatus.OK.getReasonPhrase())) {
-                        //
+                        // 通过回调，告诉你准换是否完成，如果完成了。可以进行后续操作，比如存储到数据库
                         System.out.println(url);
                     }
                 }
@@ -623,7 +623,7 @@ public class FileService extends BaseService<FileEntity, String> {
                     String errorMsg = "文件格式转换失败";
                     if (dataJson.get("Message") != null) {
                         String message = dataJson.get("Message").toString();
-                        errorMsg = errorMsg + message;
+                        errorMsg += message;
                     }
                     //失败
                 }

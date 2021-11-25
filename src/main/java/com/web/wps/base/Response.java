@@ -111,9 +111,7 @@ public class Response {
                 put(STATUS_KEY, SUCCESS_VALUE);
                 put(MSG_KEY, msg);
                 put(CODE_KEY, HttpStatus.OK.value());
-                for (Map.Entry<String, Object> entry : data.entrySet()) {
-                    put(entry.getKey(), entry.getValue());
-                }
+                this.putAll(data);
             }
         };
         return getEntity(result);
