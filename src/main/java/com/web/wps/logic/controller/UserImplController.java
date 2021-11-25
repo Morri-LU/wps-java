@@ -5,6 +5,7 @@ import com.web.wps.base.BaseController;
 import com.web.wps.base.Response;
 import com.web.wps.logic.dto.FileListDTO;
 import com.web.wps.logic.entity.UserEntity;
+import com.web.wps.logic.service.ConvertBo;
 import com.web.wps.logic.service.FileService;
 import com.web.wps.logic.service.UserService;
 import com.web.wps.util.Token;
@@ -139,20 +140,17 @@ public class UserImplController extends BaseController {
      * 获取用户列表
      */
     @GetMapping("getUserList")
-    public ResponseEntity<Object> getUserList(){
+    public ResponseEntity<Object> getUserList() {
         List<UserEntity> list = userService.getUserList();
         return Response.success(list);
     }
 
     /**
      * 转换文件
-     *
-     * @param srcUri     文件url
-     * @param exportType 到处类型
      */
     @PutMapping("convert")
-    public ResponseEntity<Object> convert(String taskId ,String srcUri, String exportType) {
-        fileService.convertFile(taskId, srcUri, exportType);
+    public ResponseEntity<Object> convert(ConvertBo bo) {
+        fileService.convertFile(bo.getTaskId(), bo.getSrcUri(), bo.getExportType());
         return Response.success();
     }
 
