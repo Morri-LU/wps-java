@@ -38,6 +38,7 @@ import java.util.*;
 @Slf4j
 public class FileService extends BaseService<FileEntity, String> {
 
+    // service 的两种写法，可参考
     private final WpsUtil wpsUtil;
     private final WpsProperties wpsProperties;
     private final OSSUtil ossUtil;
@@ -441,7 +442,7 @@ public class FileService extends BaseService<FileEntity, String> {
      * 获取文件列表--分页
      */
     public Page<FileListDTO> getFileListByPage(com.web.wps.base.Page page) {
-        PageRequest pages = new PageRequest(page.getPage() - 1, page.getSize());
+        PageRequest pages = PageRequest.of(page.getPage() - 1, page.getSize());
         return this.getRepository().getAllFileByPage(pages);
     }
 
@@ -471,6 +472,7 @@ public class FileService extends BaseService<FileEntity, String> {
      * @param file 文件
      */
     public void uploadFile(MultipartFile file) {
+        // 写死的，用户可以自己定义的哟
         String uploadUserId = "3";
         ResFileDTO resFileDTO;
         if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
