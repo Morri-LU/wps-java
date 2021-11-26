@@ -529,7 +529,7 @@ public class FileService extends BaseService<FileEntity, String> {
      */
     public void convertFile(String taskId, String srcUri, String exportType) {
         if (StringUtils.isEmpty(taskId)) {
-            taskId = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+            taskId = UUID.randomUUID().toString().replaceAll("-", "");
         }
         System.out.println("--convertFile:taskId:-> " + taskId);
         String headerDate = Common.getGMTDate();
