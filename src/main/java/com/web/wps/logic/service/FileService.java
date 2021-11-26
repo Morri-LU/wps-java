@@ -543,6 +543,11 @@ public class FileService extends BaseService<FileEntity, String> {
         }
         param.put("CallBack", serverProperties.getDomain() + (port == null ? "" : (":" + port)) + "/v1/3rd/file/convertCallback");//回调地址，文件转换后的通知地址，需保证可访问
         param.put("TaskId", taskId);
+
+        // TODO
+        // 注意，这里的param只是放了必填参数，转换效果可能达不到最理想，详细参数请参考wps官方文档
+        // https://open.wps.cn/docs/doc-format-conversion/api-list
+
         //Content-MD5 表示请求内容数据的MD5值，对消息内容（不包括头部）计算MD5值获得128比特位数字，对该数字进行base64编码而得到，如”eB5eJF1ptWaXm4bijSPyxw==”，也可以为空；
         String contentMd5 = Common.getMD5(param);
         //签名url的参数不带请求参数
