@@ -149,7 +149,7 @@ public class UserImplController extends BaseController {
      * 转换文件
      */
     @PutMapping("convert")
-    public ResponseEntity<Object> convert(ConvertBo bo) {
+    public ResponseEntity<Object> convert(@RequestBody ConvertBo bo) {
         fileService.convertFile(bo.getTaskId(), bo.getSrcUri(), bo.getExportType());
         return Response.success();
     }
