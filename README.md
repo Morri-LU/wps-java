@@ -1,7 +1,11 @@
 # wps-view-java
 
+## 本次更新01-23
+新增对minio对象存储支持
+感谢[zhuoran提交的PR](https://gitee.com/zhuoran007)
+
 ## 本次更新11-24
-1. 集成wps官方文档转换API
+1. 集成wps官方文档转换API,配合VUE前端项目,实现文件的转换
 2. 代码样式调整
 3. 用阿里oss的用户，增加一个阿里官方转换文档方法
 
@@ -55,8 +59,9 @@ react:
 ApplicationTests类文件中，有个OSS地址转在线预览地址方法，以及文档转换方法，但是是收费的，相关费用自行了解
 <br>
 
-##### 感谢
+#### 感谢
 [caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)
+[zhuoran提交的minio对象存储PR](https://gitee.com/zhuoran007)
 <br/>
 
 ## 特别鸣谢
