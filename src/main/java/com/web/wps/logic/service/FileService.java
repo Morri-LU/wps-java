@@ -14,6 +14,7 @@ import com.web.wps.util.*;
 import com.web.wps.util.file.FileUtil;
 import com.web.wps.util.upload.ResFileDTO;
 import com.web.wps.util.upload.UploadFileLocation;
+import com.web.wps.util.upload.oss.MinioUtil;
 import com.web.wps.util.upload.oss.OSSUtil;
 import com.web.wps.util.upload.qn.QNUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,7 @@ public class FileService extends BaseService<FileEntity, String> {
     private final WpsUtil wpsUtil;
     private final WpsProperties wpsProperties;
     private final OSSUtil ossUtil;
+    private final MinioUtil minioUtil;
     private final UserAclService userAclService;
     private final WatermarkService watermarkService;
     private final UserService userService;
@@ -51,10 +53,7 @@ public class FileService extends BaseService<FileEntity, String> {
     private final UploadProperties uploadProperties;
 
     @Autowired
-    public FileService(WpsUtil wpsUtil, WpsProperties wpsProperties, OSSUtil ossUtil,
-                       UserAclService userAclService, WatermarkService watermarkService,
-                       UserService userService, FileVersionService fileVersionService,
-                       RedirectProperties redirect, QNUtil qnUtil, UploadProperties uploadProperties) {
+    public FileService(WpsUtil wpsUtil, WpsProperties wpsProperties, OSSUtil ossUtil, UserAclService userAclService, WatermarkService watermarkService, UserService userService, FileVersionService fileVersionService, RedirectProperties redirect, QNUtil qnUtil, MinioUtil minioUtil, UploadProperties uploadProperties) {
         this.wpsUtil = wpsUtil;
         this.wpsProperties = wpsProperties;
         this.ossUtil = ossUtil;
@@ -64,8 +63,10 @@ public class FileService extends BaseService<FileEntity, String> {
         this.fileVersionService = fileVersionService;
         this.redirect = redirect;
         this.qnUtil = qnUtil;
+        this.minioUtil = minioUtil;
         this.uploadProperties = uploadProperties;
-    }
+      }
+      
 
     @Autowired
     private ConvertProperties convertProperties;
@@ -291,7 +292,9 @@ public class FileService extends BaseService<FileEntity, String> {
         ResFileDTO resFileDTO;
         if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
             resFileDTO = qnUtil.uploadMultipartFile(file);
-        } else {
+        } else if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.MINIO)) {
+            resFileDTO = minioUtil.uploadMultipartFile(file);
+          } else {
             resFileDTO = ossUtil.uploadMultipartFile(file);
         }
         String fileName = resFileDTO.getFileName();
@@ -376,7 +379,9 @@ public class FileService extends BaseService<FileEntity, String> {
         ResFileDTO resFileDTO;
         if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
             resFileDTO = qnUtil.uploadMultipartFile(mFile);
-        } else {
+        } else if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.MINIO)) {
+            resFileDTO = minioUtil.uploadMultipartFile(mFile);
+          } else {
             resFileDTO = ossUtil.uploadMultipartFile(mFile);
         }
         int size = (int) resFileDTO.getFileSize();
@@ -461,7 +466,9 @@ public class FileService extends BaseService<FileEntity, String> {
                 try {
                     if (file.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
                         qnUtil.deleteFile(FileUtil.subFileUrl(file.getDownload_url()));
-                    } else {
+                    } else if (file.getFileLocation().equalsIgnoreCase(UploadFileLocation.MINIO)) {
+                        minioUtil.deleteFile(FileUtil.subFileUrl(file.getDownload_url()));
+                      } else {
                         ossUtil.deleteFile(FileUtil.subFileUrl(file.getDownload_url()));
                     }
                 } catch (Exception e) {
@@ -488,7 +495,10 @@ public class FileService extends BaseService<FileEntity, String> {
         ResFileDTO resFileDTO;
         if (uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.QN)) {
             resFileDTO = qnUtil.uploadMultipartFile(file);
-        } else {
+        }else if(uploadProperties.getFileLocation().equalsIgnoreCase(UploadFileLocation.MINIO)){
+        	resFileDTO = minioUtil.uploadMultipartFile(file);
+        }
+        else {
             resFileDTO = ossUtil.uploadMultipartFile(file);
         }
         // 上传成功后，处理数据库记录值
