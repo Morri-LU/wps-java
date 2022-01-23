@@ -61,6 +61,7 @@ ApplicationTests类文件中，有个OSS地址转在线预览地址方法，以�
 
 #### 感谢
 [caizhangwei提供的反馈](https://gitee.com/cai_zhang_wei)
+
 [zhuoran提交的minio对象存储PR](https://gitee.com/zhuoran007)
 <br/>
 
