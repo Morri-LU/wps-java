@@ -12,4 +12,9 @@ public abstract class UploadFileLocation {
      */
     public final static String OSS = "oss";
 
+     /**
+     * mimio 对象存储
+     */
+    public final static String MINIO = "minio";
+
 }
