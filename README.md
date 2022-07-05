@@ -47,10 +47,10 @@ react:
 4. 前端代码地址
 
     vue:
-[https://gitee.com/mose-x/wps-view-vue.git](https://gitee.com/mose-x/wps-view-vue.git)
+[https://gitee.com/mose-x/wps-view-vue](https://gitee.com/mose-x/wps-view-vue)
 
     react:
-[https://gitee.com/mose-x/wps-view-react.git](https://gitee.com/mose-x/wps-view-react.git)
+[https://gitee.com/mose-x/wps-view-react](https://gitee.com/mose-x/wps-view-react)
 
 ## 配置文件中的参数部分可做参考
 ## 代码结构可自行调整
